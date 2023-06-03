@@ -131,6 +131,13 @@ const verifyAdmin = async(req, res, next) =>{
         res.send(result)
     })
 
+    app.delete("/menu/:id", verifyJWT, verifyAdmin, async (req, res)=>{
+      const id = req.params.id;
+      const query = { _id : new ObjectId(id)}
+      const result  = await menuCollection.deleteOne(query)
+      res.send(result);
+    })
+
     app.post("/menu", verifyJWT, verifyAdmin, async(req, res)=>{
       const newItem = req.body
       const result = await menuCollection.insertOne(newItem)
